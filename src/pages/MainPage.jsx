@@ -1,18 +1,67 @@
 import React, { useState } from "react";
 import { Typography, Box, TextField, Button } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import Stack from "@mui/material/Stack";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import { useSnackbar } from "notistack";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { v1 as uuidv1 } from "uuid";
+import useRequestAuth from "../hooks/useRequestAuth";
+import moment from "moment";
+import SelectTime from "../components/SelectTime";
 
+const validationSchema = yup.object({
+  room: yup.string("Enter your room name").required("Room name is required"),
+});
 export default function MainPage() {
-  const [date, setDate] = useState(new Date("2022-08-18T21:11:54"));
-  const handleChange = (newValue) => {
-    setDate(newValue);
+  const { CreateMeeting } = useRequestAuth();
+  const formik = useFormik({
+    initialValues: {
+      room: "",
+    },
+    validationSchema: validationSchema,
+    enableReinitialize: true,
+    onSubmit: (values) => {
+      const uidRoom = uuidv1();
+
+      CreateMeeting({
+        uid: uidRoom,
+        start: dateApi,
+        duration: duration,
+        room_name: values.room,
+      });
+
+      setLink(`http://127.0.0.1:5173/join/${uidRoom}/`);
+    },
+  });
+  const { enqueueSnackbar } = useSnackbar();
+  const [date, setDate] = useState(new Date());
+  const [dateApi, setDateApi] = useState(
+    moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+  );
+  const [link, setLink] = useState("hola.com");
+  const [duration, setDuration] = useState("5");
+  const handleCopytoClipBoard = () => {
+    enqueueSnackbar("Copied!", {
+      variant: "info",
+    });
+    navigator.clipboard.writeText(link);
+  };
+
+  const handleChange = (newDate) => {
+    setDate(newDate);
+    const dateMoment = moment(newDate).format("YYYY-MM-DD HH:mm:ss");
+    setDateApi(dateMoment);
+  };
+
+  const handleDuration = (event) => {
+    setDuration(event.target.value);
   };
   return (
     <Box sx={{ flexGrow: 1, height: "100%", width: "100%" }}>
@@ -56,7 +105,6 @@ export default function MainPage() {
           }}
         >
           <Typography sx={{ fontSize: "2rem", fontWeight: "500", mb: 4 }}>
-            {" "}
             Schedule your meeting:
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -67,16 +115,52 @@ export default function MainPage() {
               className="date"
               InputProps={{
                 sx: {
-                  borderColor: "white",
-                  color: "white",
-                  "& .MuiSvgIcon-root": { color: "white" },
+                  width: 275,
+                  color: "black",
+                  "& .MuiSvgIcon-root": { color: "black" },
                 },
               }}
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
-          <TextField sx={{ mt: 5, p: 2 }} />
-          <Button sx={{ width: "10rem" }}>Generate Link</Button>
+          <SelectTime handleDuration={handleDuration} duration={duration} />
+
+          <form
+            onSubmit={formik.handleSubmit}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TextField
+              label="Enter your room name"
+              name="room"
+              id="room"
+              onChange={formik.handleChange}
+              error={formik.touched.room && Boolean(formik.errors.room)}
+              helperText={formik.touched.room && formik.errors.room}
+              sx={{ mt: 2, width: 275 }}
+            />
+
+            <OutlinedInput
+              id="standard-adornment-password"
+              type="text"
+              value={link}
+              sx={{ borderRadius: "20px", mt: 7, p: 0.5 }}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton onClick={handleCopytoClipBoard}>
+                    <ContentCopyIcon />
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            <Button type="submit" sx={{ width: "10rem" }}>
+              Generate Link
+            </Button>
+          </form>
         </Grid>
       </Grid>
     </Box>
