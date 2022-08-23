@@ -40,6 +40,16 @@
   color: #888;
 }
 
-.css-1q6at85-MuiInputBase-root-MuiOutlinedInput-root{
-  border-radius: 50px;
+
+#root{
+  width:90vw;
+  height:90vh;
+}
+
+.agora_video_player{
+border-radius: 25px;
+}
+
+div[id^="agora-video-player-track"]{
+  background-color: transparent!important
 }

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Box, TextField, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-export default function InDateTime() {
+export default function InDateTime({ room }) {
   const [name, setName] = useState(null);
-  console.log(name);
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Typography>Enter your name before entering please!</Typography>
@@ -14,7 +16,14 @@ export default function InDateTime() {
         onChange={(e) => setName(e.target.value)}
         sx={{ mt: 2 }}
       />
-      <Button sx={{ mt: 8 }}>Join</Button>
+      <Button
+        sx={{ mt: 8 }}
+        onClick={() => {
+          navigate(`/room/${room}/${name}`);
+        }}
+      >
+        Join
+      </Button>
     </Box>
   );
 }

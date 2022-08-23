@@ -6,6 +6,7 @@ import { SnackbarProvider } from "notistack";
 import MainPage from "./pages/MainPage";
 import JoinMeeting from "./pages/JoinMeeting";
 import CssBaseline from "@mui/material/CssBaseline";
+import RoomMeeting from "./pages/RoomMeeting";
 
 function App() {
   // const [joined, setJoined] = useState(false);
@@ -23,10 +24,12 @@ function App() {
       }}
     >
       {/* <CssBaseline /> */}
+
       <Router>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/join/:room" element={<JoinMeeting />} />
+          <Route path="/room/:room/:name" element={<RoomMeeting />} />
         </Routes>
       </Router>
     </SnackbarProvider>

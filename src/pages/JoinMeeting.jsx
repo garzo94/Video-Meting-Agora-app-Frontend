@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import OutOfDateTime from "../components/OutOfDateTime";
 import useRequestAuth from "../hooks/useRequestAuth";
 import moment from "moment";
 import InDateTime from "../components/InDateTime";
-import { TimeToLeaveRounded } from "@mui/icons-material";
 
 export default function JoinMeeting() {
   const { GetMeetingData, meetingData } = useRequestAuth();
@@ -29,7 +28,7 @@ export default function JoinMeeting() {
   return (
     <>
       {isInDate ? (
-        <InDateTime />
+        <InDateTime room={room} />
       ) : (
         <OutOfDateTime month={month} day={day} time={time} />
       )}
