@@ -1,12 +1,18 @@
 import React, { useRef, useEffect } from "react";
 import { Grid, Box } from "@mui/material";
+import useMeeting from "../globalVariables/MeetingContext";
 
 export default function VideoPlayer({ user, usersLength, name }) {
   const ref = useRef();
+  const { VideoTag } = useMeeting();
 
   useEffect(() => {
     user.videoTrack.play(ref.current);
+    {
+    }
   }, []);
+
+
   const height = usersLength >= 3 ? "40%" : "75%";
 
   return (

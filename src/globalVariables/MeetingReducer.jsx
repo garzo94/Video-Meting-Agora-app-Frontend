@@ -1,5 +1,6 @@
 export const initialState = {
   inDateTime: false,
+  videoTag: false,
 };
 
 export default function MeetingReducer(state, action) {
@@ -9,6 +10,11 @@ export default function MeetingReducer(state, action) {
       return {
         ...state,
         inDateTime: !state.inDateTime,
+      };
+    case "VIDEO_TAG":
+      return {
+        ...state,
+        videoTag: !state.videoTag,
       };
 
     default:

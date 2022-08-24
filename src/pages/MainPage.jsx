@@ -43,20 +43,20 @@ export default function MainPage() {
   const { enqueueSnackbar } = useSnackbar();
   const [date, setDate] = useState(new Date());
   const [dateApi, setDateApi] = useState(
-    moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+    moment(new Date()).format("YYYY-MM-DD HH:mm")
   );
   const [link, setLink] = useState("hola.com");
   const [duration, setDuration] = useState("5");
   const handleCopytoClipBoard = () => {
     enqueueSnackbar("Copied!", {
-      variant: "info",
+      variant: "success",
     });
     navigator.clipboard.writeText(link);
   };
 
   const handleChange = (newDate) => {
     setDate(newDate);
-    const dateMoment = moment(newDate).format("YYYY-MM-DD HH:mm:ss");
+    const dateMoment = moment(newDate).format("YYYY-MM-DD HH:mm");
     setDateApi(dateMoment);
   };
 

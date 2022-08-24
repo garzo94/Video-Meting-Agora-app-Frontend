@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import OutOfDateTime from "../components/OutOfDateTime";
 import useRequestAuth from "../hooks/useRequestAuth";
@@ -7,8 +7,23 @@ import InDateTime from "../components/InDateTime";
 
 export default function JoinMeeting() {
   const { GetMeetingData, meetingData } = useRequestAuth();
+  const [isInDate, setIsInDate] = useState(null);
+
   const { room } = useParams();
-  const isInDate = moment().isAfter(meetingData.start);
+  useEffect(() => {
+    if (meetingData.start) {
+      setIsInDate(
+        moment().format() > new Date(meetingData.start).toISOString()
+      );
+    }
+  }, [meetingData]);
+
+  //   console.log(
+  //     moment().format(),
+  //     new Date(meetingData.start).toISOString(),
+  //     "dataaa"
+  //   );
+
   const month = moment(meetingData.start, "YYYY-MM-DDTHH:mm:ss.SSS[Z]").format(
     "MMMM"
   );
@@ -23,14 +38,16 @@ export default function JoinMeeting() {
     if (room) {
       GetMeetingData({ query: room });
     }
-  }, [room]);
+  }, []);
 
   return (
     <>
       {isInDate ? (
-        <InDateTime room={room} />
-      ) : (
+        <InDateTime room={room} date={meetingData.start} />
+      ) : meetingData.start && isInDate !== null && isInDate === false ? (
         <OutOfDateTime month={month} day={day} time={time} />
+      ) : (
+        <h1>Loading</h1>
       )}
     </>
   );

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, TextField, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import useMeeting from "../globalVariables/MeetingContext";
 export default function InDateTime({ room }) {
   const [name, setName] = useState(null);
   const navigate = useNavigate();

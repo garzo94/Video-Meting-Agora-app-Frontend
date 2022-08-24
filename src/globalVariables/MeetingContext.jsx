@@ -14,8 +14,16 @@ export function Provider({ children }) {
     });
   };
 
+  const VideoTag = () => {
+    dispatch({
+      type: "VIDEO_TAG",
+      payload: !state.VideoTag,
+    });
+  };
   const value = {
     inDateTime: state.inDateTime,
+    videoTag: state.videoTag,
+    VideoTag,
     InDateTame,
   };
 
@@ -24,10 +32,6 @@ export function Provider({ children }) {
 
 const useMeeting = () => {
   const context = useContext(Context);
-
-  if (context === undefined) {
-    throw new Error("useText must be used within ShopContext");
-  }
 
   return context;
 };
