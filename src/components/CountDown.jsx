@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Tooltip, IconButton } from "@mui/material";
+import { Box, Typography, Tooltip, IconButton, Stack } from "@mui/material";
 import { getRemainingTimeUntilMsTimestamp } from "./Utils/CountdownTimerUtils";
 import { useNavigate } from "react-router-dom";
 import MoreTimeIcon from "@mui/icons-material/MoreTime";
+import { useSnackbar } from "notistack";
+import ChatIcon from "@mui/icons-material/Chat";
+import ChatBox from "./ChatBox";
+import useMeeting from "../globalVariables/MeetingContext";
 
 const defaultRemainingTime = {
   seconds: "0",
@@ -12,19 +16,42 @@ export default function CountDown({
   countdownTimestampMs,
   localTracks,
   client,
+  CHANNEL,
 }) {
+  const { messagesVar, MessagesVar } = useMeeting();
+  const [chat, setChat] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [remainingTime, setRemainingTime] = useState(defaultRemainingTime);
   const [timeDisable, setTimeDisable] = useState(false);
+  const [agreeMoreTime, setAgreeMoreTime] = useState(false);
+  console.log(messagesVar, chat, "adding");
+
+  useEffect(() => {
+    if (chat === true) {
+      MessagesVar(false);
+    }
+  }, [chat]);
+
   function moreTime(time, disable) {
-    console.log(disable, "disable");
     if (disable === false) {
       return time;
     }
     if (disable === true) {
-      return time + 400000;
+      return time + 300000;
     }
   }
+
+  useEffect(() => {
+    if (timeDisable && agreeMoreTime === false) {
+      enqueueSnackbar(
+        "You have made a request to extend the meeting, if approved the meeting will be extended 5 more minutes.",
+        { variant: "info", autoHideDuration: 4000 }
+      );
+    }
+    if (timeDisable) {
+    }
+  }, [timeDisable]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -38,17 +65,17 @@ export default function CountDown({
     setRemainingTime(getRemainingTimeUntilMsTimestamp(countdown));
   }
 
-  useEffect(() => {
-    if (remainingTime.seconds === "00" && remainingTime.minutes === "00") {
-      for (let localTrack of localTracks) {
-        localTrack.stop();
-        localTrack.close();
-      }
-      client.unpublish(localTracks).then(() => client.leave());
-      navigate("/");
-      window.location.reload(true);
-    }
-  }, [remainingTime.seconds]);
+  //   useEffect(() => {
+  //     if (remainingTime.seconds === "00" && remainingTime.minutes === "00") {
+  //       for (let localTrack of localTracks) {
+  //         localTrack.stop();
+  //         localTrack.close();
+  //       }
+  //       client.unpublish(localTracks).then(() => client.leave());
+  //       navigate("/");
+  //       window.location.reload(true);
+  //     }
+  //   }, [remainingTime.seconds]);
 
   return (
     <Box sx={{ position: "relative" }}>
@@ -68,7 +95,7 @@ export default function CountDown({
         <Typography sx={{ ml: "5px" }}>{remainingTime.seconds}</Typography>
         <Typography sx={{ ml: "5px" }}>seconds</Typography>
       </Box>
-      <Box sx={{ position: "absolute" }}>
+      <Stack sx={{ position: "absolute", right: "60px", bottom: "0px" }}>
         <Tooltip title="Add 5 minutes more">
           <IconButton
             size="large"
@@ -76,16 +103,22 @@ export default function CountDown({
               setTimeDisable(true);
             }}
             disabled={timeDisable}
-            sx={{
-              position: "absolute",
-              left: "1000px",
-              bottom: "-20px",
-            }}
           >
-            <MoreTimeIcon sx={{ fontSize: 60 }} />
+            <MoreTimeIcon sx={{ fontSize: 40 }} />
           </IconButton>
         </Tooltip>
-      </Box>
+        {messagesVar && chat === false ? (
+          <IconButton size="large" onClick={() => setChat(!chat)}>
+            <ChatIcon sx={{ fontSize: 60, color: "red", bgcolor: "red" }} />
+          </IconButton>
+        ) : (
+          <IconButton size="large" onClick={() => setChat(!chat)}>
+            <ChatIcon sx={{ fontSize: 40 }} />
+          </IconButton>
+        )}
+      </Stack>
+
+      <ChatBox CHANNEL={CHANNEL} timeDisable={timeDisable} chat={chat} />
     </Box>
   );
 }

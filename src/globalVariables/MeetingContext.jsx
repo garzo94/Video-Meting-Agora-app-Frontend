@@ -14,16 +14,16 @@ export function Provider({ children }) {
     });
   };
 
-  const VideoTag = () => {
+  const MessagesVar = (values) => {
     dispatch({
-      type: "VIDEO_TAG",
-      payload: !state.VideoTag,
+      type: "MESSAGES",
+      payload: values,
     });
   };
   const value = {
     inDateTime: state.inDateTime,
-    videoTag: state.videoTag,
-    VideoTag,
+    messagesVar: state.messagesVar,
+    MessagesVar,
     InDateTame,
   };
 

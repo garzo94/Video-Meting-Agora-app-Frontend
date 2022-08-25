@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
+import AgoraRTM from "agora-rtm-sdk";
 import VideoPlayer from "./VideoPlayer";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Controls from "./Controls";
-import Countdown from "react-countdown";
-import styled from "styled-components";
 import CountDown from "./CountDown";
 import useMeeting from "../globalVariables/MeetingContext";
-import IconButton from "@mui/material/IconButton";
-import MoreTimeIcon from "@mui/icons-material/MoreTime";
-import { useSnackbar } from "notistack";
-import Tooltip from "@mui/material/Tooltip";
+import { v4 as uuid } from "uuid";
+import ChatBox from "./ChatBox";
 
 const APP_ID = "77780af0adae470b9bf4d235b64c14c4";
 
@@ -18,6 +15,7 @@ const client = AgoraRTC.createClient({
   mode: "rtc",
   codec: "vp8",
 });
+
 export default function VideoRoom({
   token,
   uid,
@@ -26,7 +24,9 @@ export default function VideoRoom({
   date,
   duration,
 }) {
-  const { enqueueSnackbar } = useSnackbar();
+  const [users, setUsers] = useState([]);
+  const [localTracks, setLocalTracks] = useState([]);
+
   var startDate =
     new Date(
       date.year,
@@ -35,20 +35,7 @@ export default function VideoRoom({
       date.hour,
       date.minutes
     ).getTime() + 11000;
-
-  //   const PurpleCount = styled.div`
-  //     span {
-  //       color: purple;
-  //     }
-  function handleMoreTime() {
-    console.log("que pedo");
-    duration + 300000;
-  }
-  const { videoTag, VideoTag } = useMeeting();
-  const [users, setUsers] = useState([]);
-  const [localTracks, setLocalTracks] = useState([]);
-  console.log(videoTag, "videooo");
-
+  const CHANNEL = channel;
   const handleUserJoined = async (user, mediaType) => {
     await client.subscribe(user, mediaType);
 
@@ -56,9 +43,9 @@ export default function VideoRoom({
       setUsers((previousUsers) => [...previousUsers, user]);
     }
 
-    if (mediaType === "audio") {
-      user.audioTrack.play();
-    }
+    // if (mediaType === "audio") {
+    //   user.audioTrack.play();
+    // }
   };
 
   const handleUserLeft = (user) => {
@@ -66,6 +53,7 @@ export default function VideoRoom({
       previousUsers.filter((u) => u.uid !== user.uid)
     );
   };
+
   useEffect(() => {
     client.on("user-published", handleUserJoined);
     client.on("user-left", handleUserLeft);
@@ -122,7 +110,7 @@ export default function VideoRoom({
       <h2
         style={{
           position: "absolute",
-          bottom: "-30px",
+          bottom: "-25px",
           left: "5px",
           fontSize: 40,
         }}
@@ -131,13 +119,11 @@ export default function VideoRoom({
       </h2>
 
       <Controls localTracks={localTracks} client={client} />
-      {/* <PurpleCount>
-        <Countdown date={startDate + 600000} />
-      </PurpleCount> */}
       <CountDown
         countdownTimestampMs={startDate + duration}
         localTracks={localTracks}
         client={client}
+        CHANNEL={CHANNEL}
       />
     </Box>
   );
