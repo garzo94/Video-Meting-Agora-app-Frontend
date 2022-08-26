@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Tooltip, IconButton, Stack } from "@mui/material";
 import { getRemainingTimeUntilMsTimestamp } from "./Utils/CountdownTimerUtils";
-import { useNavigate } from "react-router-dom";
 import MoreTimeIcon from "@mui/icons-material/MoreTime";
 import { useSnackbar } from "notistack";
 import ChatIcon from "@mui/icons-material/Chat";
 import ChatBox from "./ChatBox";
 import useMeeting from "../globalVariables/MeetingContext";
+import { useNavigate } from "react-router-dom";
 
 const defaultRemainingTime = {
   seconds: "0",
@@ -18,14 +18,13 @@ export default function CountDown({
   client,
   CHANNEL,
 }) {
-  const { messagesVar, MessagesVar } = useMeeting();
+  const navigate = useNavigate();
+  const { messagesVar, MessagesVar, ExtendMeeting, extendMeetingBackMessage } =
+    useMeeting();
   const [chat, setChat] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
   const [remainingTime, setRemainingTime] = useState(defaultRemainingTime);
   const [timeDisable, setTimeDisable] = useState(false);
-  const [agreeMoreTime, setAgreeMoreTime] = useState(false);
-  console.log(messagesVar, chat, "adding");
 
   useEffect(() => {
     if (chat === true) {
@@ -33,20 +32,41 @@ export default function CountDown({
     }
   }, [chat]);
 
-  function moreTime(time, disable) {
-    if (disable === false) {
-      return time;
+  useEffect(() => {
+    if (extendMeetingBackMessage === "Yes" && timeDisable) {
+      enqueueSnackbar(
+        "Your request was approved, the meeting was extended 5 minutes!",
+        { variant: "success", autoHideDuration: 5000 }
+      );
     }
-    if (disable === true) {
+    if (extendMeetingBackMessage === "No" && timeDisable) {
+      enqueueSnackbar("Sorry, your request to extend the meeting was denied", {
+        autoHideDuration: 5000,
+      });
+    }
+  }, [extendMeetingBackMessage]);
+
+  function moreTime(time, disable, extend) {
+    console.log(disable, "heey");
+    if (extend === "Yes") {
       return time + 300000;
+    } else if (disable === false) {
+      return time;
+    } else {
+      return time;
     }
   }
 
+  function handleExtendMeeting() {
+    ExtendMeeting(true);
+    setTimeDisable(true);
+  }
+
   useEffect(() => {
-    if (timeDisable && agreeMoreTime === false) {
+    if (timeDisable) {
       enqueueSnackbar(
         "You have made a request to extend the meeting, if approved the meeting will be extended 5 more minutes.",
-        { variant: "info", autoHideDuration: 4000 }
+        { variant: "info", autoHideDuration: 5000 }
       );
     }
     if (timeDisable) {
@@ -55,27 +75,29 @@ export default function CountDown({
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      updateRemainingTime(moreTime(countdownTimestampMs, timeDisable));
+      updateRemainingTime(
+        moreTime(countdownTimestampMs, timeDisable, extendMeetingBackMessage)
+      );
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [countdownTimestampMs, timeDisable]);
+  }, [countdownTimestampMs, timeDisable, extendMeetingBackMessage]);
 
   function updateRemainingTime(countdown) {
     setRemainingTime(getRemainingTimeUntilMsTimestamp(countdown));
   }
 
-  //   useEffect(() => {
-  //     if (remainingTime.seconds === "00" && remainingTime.minutes === "00") {
-  //       for (let localTrack of localTracks) {
-  //         localTrack.stop();
-  //         localTrack.close();
-  //       }
-  //       client.unpublish(localTracks).then(() => client.leave());
-  //       navigate("/");
-  //       window.location.reload(true);
-  //     }
-  //   }, [remainingTime.seconds]);
+  useEffect(() => {
+    if (remainingTime.seconds === "00" && remainingTime.minutes === "00") {
+      for (let localTrack of localTracks) {
+        localTrack.stop();
+        localTrack.close();
+      }
+      client.unpublish(localTracks).then(() => client.leave());
+      navigate("/");
+      window.location.reload(true);
+    }
+  }, [remainingTime.seconds]);
 
   return (
     <Box sx={{ position: "relative" }}>
@@ -99,9 +121,7 @@ export default function CountDown({
         <Tooltip title="Add 5 minutes more">
           <IconButton
             size="large"
-            onClick={() => {
-              setTimeDisable(true);
-            }}
+            onClick={handleExtendMeeting}
             disabled={timeDisable}
           >
             <MoreTimeIcon sx={{ fontSize: 40 }} />
@@ -109,7 +129,7 @@ export default function CountDown({
         </Tooltip>
         {messagesVar && chat === false ? (
           <IconButton size="large" onClick={() => setChat(!chat)}>
-            <ChatIcon sx={{ fontSize: 60, color: "red", bgcolor: "red" }} />
+            <ChatIcon sx={{ fontSize: 40, color: "red" }} />
           </IconButton>
         ) : (
           <IconButton size="large" onClick={() => setChat(!chat)}>

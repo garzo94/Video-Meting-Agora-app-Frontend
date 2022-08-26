@@ -45,7 +45,7 @@ export default function MainPage() {
   const [dateApi, setDateApi] = useState(
     moment(new Date()).format("YYYY-MM-DD HH:mm")
   );
-  const [link, setLink] = useState("hola.com");
+  const [link, setLink] = useState("");
   const [duration, setDuration] = useState("5");
   const handleCopytoClipBoard = () => {
     enqueueSnackbar("Copied!", {
@@ -101,7 +101,7 @@ export default function MainPage() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            borderLeft: "1px solid white",
+            borderLeft: "1px solid gray",
           }}
         >
           <Typography sx={{ fontSize: "2rem", fontWeight: "500", mb: 4 }}>

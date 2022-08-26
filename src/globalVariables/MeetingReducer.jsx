@@ -1,6 +1,9 @@
 export const initialState = {
   inDateTime: false,
   messagesVar: false,
+  extendMeeting: false,
+  extendMeetingBack: false,
+  extendMeetingBackMessage: "",
 };
 
 export default function MeetingReducer(state, action) {
@@ -15,6 +18,21 @@ export default function MeetingReducer(state, action) {
       return {
         ...state,
         messagesVar: payload,
+      };
+    case "EXTEND":
+      return {
+        ...state,
+        extendMeeting: payload,
+      };
+    case "EXTEND_BACK":
+      return {
+        ...state,
+        extendMeetingBack: payload,
+      };
+    case "EXTEND_BACK_MESSAGE":
+      return {
+        ...state,
+        extendMeetingBackMessage: payload,
       };
 
     default:

@@ -12,7 +12,6 @@ export default function VideoPlayer({ user, usersLength, name }) {
     }
   }, []);
 
-
   const height = usersLength >= 3 ? "40%" : "75%";
 
   return (
@@ -34,6 +33,7 @@ export default function VideoPlayer({ user, usersLength, name }) {
             bottom: "5px",
             background: "rgba(0, 0, 0, 0.5)",
             padding: "10px",
+            color: "white",
           }}
         >
           My name

@@ -5,9 +5,6 @@ import VideoPlayer from "./VideoPlayer";
 import { Box, Grid } from "@mui/material";
 import Controls from "./Controls";
 import CountDown from "./CountDown";
-import useMeeting from "../globalVariables/MeetingContext";
-import { v4 as uuid } from "uuid";
-import ChatBox from "./ChatBox";
 
 const APP_ID = "77780af0adae470b9bf4d235b64c14c4";
 

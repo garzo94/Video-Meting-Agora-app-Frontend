@@ -7,14 +7,23 @@ export default function InDateTime({ room }) {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Typography>Enter your name before entering please!</Typography>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Typography>
+        Enter your name before entering the meeting please!
+      </Typography>
       <TextField
         variant="standard"
         label="name"
         required
         onChange={(e) => setName(e.target.value)}
-        sx={{ mt: 2 }}
+        sx={{ mt: 2, width: "40%" }}
       />
       <Button
         sx={{ mt: 8 }}

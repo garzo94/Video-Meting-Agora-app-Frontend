@@ -20,9 +20,36 @@ export function Provider({ children }) {
       payload: values,
     });
   };
+
+  const ExtendMeeting = (values) => {
+    dispatch({
+      type: "EXTEND",
+      payload: values,
+    });
+  };
+
+  const ExtendMeetingBack = (values) => {
+    dispatch({
+      type: "EXTEND_BACK",
+      payload: values,
+    });
+  };
+
+  const ExtendMeetingBackMessage = (values) => {
+    dispatch({
+      type: "EXTEND_BACK_MESSAGE",
+      payload: values,
+    });
+  };
   const value = {
     inDateTime: state.inDateTime,
     messagesVar: state.messagesVar,
+    extendMeeting: state.extendMeeting,
+    extendMeetingBack: state.extendMeetingBack,
+    extendMeetingBackMessage: state.extendMeetingBackMessage,
+    ExtendMeetingBack,
+    ExtendMeetingBackMessage,
+    ExtendMeeting,
     MessagesVar,
     InDateTame,
   };

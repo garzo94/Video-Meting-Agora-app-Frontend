@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -6,44 +6,51 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
+import useMeeting from "../globalVariables/MeetingContext";
+import { useSnackbar } from "notistack";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide() {
-  const [open, setOpen] = React.useState(false);
+export default function DialogTime() {
+  const { ExtendMeetingBack, ExtendMeetingBackMessage } = useMeeting();
+  const [open, setOpen] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
+  function handleDesagree() {
     setOpen(false);
-  };
+    ExtendMeetingBack(true);
+    ExtendMeetingBackMessage("No");
+  }
+
+  function handleAgree() {
+    setOpen(false);
+    ExtendMeetingBack(true);
+    ExtendMeetingBackMessage("Yes");
+    enqueueSnackbar(
+      "The meeting was extended 5 minutes!",
+      { variant: "success", autoHideDuration: 5000 }
+    );
+  }
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Slide in alert dialog
-      </Button>
       <Dialog
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle>{"Do you whant to extend the meeting?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
+            {`Alex has requested to extend the meeting, do you agree to extend it an additional 5 minutes?`}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button>
+          <Button onClick={handleDesagree}>Disagree</Button>
+          <Button onClick={handleAgree}>Agree</Button>
         </DialogActions>
       </Dialog>
     </div>
