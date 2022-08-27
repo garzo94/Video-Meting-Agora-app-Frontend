@@ -47,7 +47,6 @@ export default function CountDown({
   }, [extendMeetingBackMessage]);
 
   function moreTime(time, disable, extend) {
-    console.log(disable, "heey");
     if (extend === "Yes") {
       return time + 300000;
     } else if (disable === false) {

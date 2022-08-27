@@ -1,8 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Box, TextField, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import useMeeting from "../globalVariables/MeetingContext";
+import { useFormik } from "formik";
+import * as yup from "yup";
+
+const validationSchema = yup.object({
+  name: yup
+    .string("Enter your name")
+    .required("Your name is required to join the meeting"),
+});
 export default function InDateTime({ room }) {
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+    },
+    validationSchema: validationSchema,
+    enableReinitialize: true,
+    onSubmit: (values) => {
+      setName(values.name);
+      navigate(`/room/${room}/${values.name}`);
+    },
+  });
   const [name, setName] = useState(null);
   const navigate = useNavigate();
 
@@ -18,21 +36,23 @@ export default function InDateTime({ room }) {
       <Typography>
         Enter your name before entering the meeting please!
       </Typography>
-      <TextField
-        variant="standard"
-        label="name"
-        required
-        onChange={(e) => setName(e.target.value)}
-        sx={{ mt: 2, width: "40%" }}
-      />
-      <Button
-        sx={{ mt: 8 }}
-        onClick={() => {
-          navigate(`/room/${room}/${name}`);
-        }}
-      >
-        Join
-      </Button>
+      <form onSubmit={formik.handleSubmit}>
+        <TextField
+          variant="standard"
+          id="name"
+          name="name"
+          label="Name"
+          required
+          onChange={formik.handleChange}
+          sx={{ mt: 2, width: "40%" }}
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={formik.touched.name && formik.errors.name}
+        />
+
+        <Button sx={{ mt: 8 }} type="submit">
+          Join
+        </Button>
+      </form>
     </Box>
   );
 }

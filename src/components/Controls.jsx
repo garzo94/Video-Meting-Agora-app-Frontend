@@ -8,7 +8,7 @@ import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import CallEndIcon from "@mui/icons-material/CallEnd";
 import { useNavigate } from "react-router-dom";
 
-export default function Controls({ localTracks, client }) {
+export default function Controls({ localTracks, client, toggleCamMic }) {
   const [cameraMuted, setcameraMuted] = useState(false);
   const [micMuted, setMicMuted] = useState(false);
   const navigate = useNavigate();
@@ -16,18 +16,19 @@ export default function Controls({ localTracks, client }) {
     for (let localTrack of localTracks) {
       localTrack.stop();
       localTrack.close();
+      window.location.reload(true);
     }
     client.unpublish(localTracks).then(() => client.leave());
     navigate("/");
   }
 
-  async function toggleCamera(e) {
+  async function toggleCamera() {
     if (localTracks[1].muted) {
       await localTracks[1].setMuted(false);
-      setcameraMuted(false);
+      setMicMuted(false);
     } else {
       await localTracks[1].setMuted(true);
-      setcameraMuted(true);
+      setMicMuted(true);
     }
   }
 

@@ -1,10 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import { Grid, Box } from "@mui/material";
-import useMeeting from "../globalVariables/MeetingContext";
 
-export default function VideoPlayer({ user, usersLength, name }) {
+export default function VideoPlayer({ user, usersLength, name, uid }) {
   const ref = useRef();
-  const { VideoTag } = useMeeting();
 
   useEffect(() => {
     user.videoTrack.play(ref.current);
@@ -13,6 +11,7 @@ export default function VideoPlayer({ user, usersLength, name }) {
   }, []);
 
   const height = usersLength >= 3 ? "40%" : "75%";
+  // console.log(usersLength, "userssss");
 
   return (
     <Grid
@@ -21,6 +20,7 @@ export default function VideoPlayer({ user, usersLength, name }) {
       lg={usersLength >= 3 ? 3 : 5}
       md={usersLength >= 3 ? 3 : 5}
       sx={{ height: { height }, m: 3, position: "relative" }}
+      className="holaa perro"
     >
       <Box sx={{ borderRadius: "5px", backgroundColor: "black" }}>
         <h4
@@ -36,7 +36,7 @@ export default function VideoPlayer({ user, usersLength, name }) {
             color: "white",
           }}
         >
-          My name
+          {uid === user.uid ? name : "Alex 2"}
         </h4>
       </Box>
     </Grid>

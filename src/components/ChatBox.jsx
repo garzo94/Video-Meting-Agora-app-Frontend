@@ -32,9 +32,6 @@ export default function ChatBox({ CHANNEL, timeDisable, chat }) {
   const [dialog, setDialog] = useState(null);
   const display = chat ? "block" : "none";
 
-  console.log(extendMeetingBackMessage, "kkk");
-
-
   const appendMessage = (message) => {
     setMessages((messages) => [...messages, message]);
   };

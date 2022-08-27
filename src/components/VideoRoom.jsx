@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
-import AgoraRTM from "agora-rtm-sdk";
 import VideoPlayer from "./VideoPlayer";
 import { Box, Grid } from "@mui/material";
 import Controls from "./Controls";
@@ -22,8 +21,8 @@ export default function VideoRoom({
   duration,
 }) {
   const [users, setUsers] = useState([]);
-  const [localTracks, setLocalTracks] = useState([]);
 
+  const [localTracks, setLocalTracks] = useState([]);
   var startDate =
     new Date(
       date.year,
@@ -33,13 +32,16 @@ export default function VideoRoom({
       date.minutes
     ).getTime() + 11000;
   const CHANNEL = channel;
+  console.log(users, "usersss");
+
   const handleUserJoined = async (user, mediaType) => {
     await client.subscribe(user, mediaType);
-
     if (mediaType === "video") {
-      setUsers((previousUsers) => [...previousUsers, user]);
+      setUsers((previousUsers) => {
+        console.log(previousUsers, "prevvv");
+        return [...previousUsers, user];
+      });
     }
-
     // if (mediaType === "audio") {
     //   user.audioTrack.play();
     // }
@@ -52,6 +54,7 @@ export default function VideoRoom({
   };
 
   useEffect(() => {
+    console.log("whaat");
     client.on("user-published", handleUserJoined);
     client.on("user-left", handleUserLeft);
     client
@@ -62,6 +65,7 @@ export default function VideoRoom({
       .then(([tracks, uid]) => {
         const [audioTrack, videoTrack] = tracks;
         setLocalTracks(tracks);
+
         setUsers((previousUsers) => [
           ...previousUsers,
           {
@@ -99,8 +103,9 @@ export default function VideoRoom({
           <VideoPlayer
             key={user.uid}
             user={user}
-            usersLenght={users.length}
+            usersLength={users.length}
             name={name}
+            uid={uid}
           />
         ))}
       </Grid>
@@ -115,7 +120,13 @@ export default function VideoRoom({
         {channel}
       </h2>
 
-      <Controls localTracks={localTracks} client={client} />
+      <Controls
+        localTracks={localTracks}
+        client={client}
+        users={users}
+        id={uid}
+        // toggleCamMic={toggleCamMic}
+      />
       <CountDown
         countdownTimestampMs={startDate + duration}
         localTracks={localTracks}
