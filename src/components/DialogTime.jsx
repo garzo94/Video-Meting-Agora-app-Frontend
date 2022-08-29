@@ -14,8 +14,12 @@ import CloseIcon from "@mui/icons-material/Close";
 export default function DialogTime({ timeDisable }) {
   const [width, setWidth] = useState("0%");
   const [guests, setGuests] = useState("1/2");
-  const { ExtendMeetingBack, ExtendMeetingBackMessage, ExtendMeeting } =
-    useMeeting();
+  const {
+    ExtendMeetingBack,
+    ExtendMeetingBackMessage,
+    ExtendMeeting,
+    extendMeetingBackMessage,
+  } = useMeeting();
   const [open, setOpen] = useState(true);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -27,13 +31,24 @@ export default function DialogTime({ timeDisable }) {
     }
   }, [timeDisable]);
 
-  function handleAgree() {
-    setWidth("50%");
-    if (timeDisable === false) {
+  useEffect(() => {
+    if (extendMeetingBackMessage === "Yes" && timeDisable) {
+      setGuests("2/2");
       setWidth("100%");
     }
-    ExtendMeeting(true);
+  }, [extendMeetingBackMessage]);
+
+  function handleAgree() {
+    setWidth("50%");
+    if (timeDisable) {
+      ExtendMeeting(true);
+      enqueueSnackbar("Waiting for the others votes...", {
+        autoHideDuration: 5000,
+      });
+    }
+
     if (timeDisable === false) {
+      setWidth("100%");
       ExtendMeetingBack(true);
       ExtendMeetingBackMessage("Yes");
       enqueueSnackbar("The meeting was extended 5 minutes!", {
