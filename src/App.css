@@ -1,28 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
 #root {
-
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  min-height: 100vh;
+
+}
+html, body, #root {
+  height: 100vh;
+  font-family: 'DM Sans';
+
 }
 
 
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-
-#root{
-  width:90vw;
-  height:90vh;
-}
 
 .agora_video_player{
 border-radius: 25px;
+width:384px !important;
+  height:288px !important;
 }
 
 div[id^="agora-video-player-track"]{
@@ -38,15 +33,12 @@ div[id^="agora-video-player-track"]{
 .panel {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 1rem;
   margin: 0 auto;
-  max-width: 300px;
-  height: 300px;
-  background: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
+  width: 300px;
+  height: 500px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+
 }
 
 .messages {
@@ -63,17 +55,42 @@ div[id^="agora-video-player-track"]{
 }
 
 .message {
-  text-align: left;
-  display: flex;
-  margin-bottom: 6px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 23px;
+  margin-bottom: 12px;
+ color: #515151;
+
+
 }
 
 .user-self {
-  color: green;
-}
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+  margin-left: 0.2rem;
+
+  /* neutral/neutral-12 */
+
+  color: #242424;}
 
 .user-them {
-  color: red;
+  font-family: 'DM Sans';
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 23px;
+display: flex;
+align-items: center;
+margin-left: 0.2rem;
+
+/* neutral/neutral-12 */
+
+color: #242424;
 }
 
 .form {
@@ -84,11 +101,12 @@ div[id^="agora-video-player-track"]{
 .input {
   width: 100%;
   border: none;
-  height: 20px;
+  height: 40px;
   padding: 8px;
   border-top: 1px solid #999;
-  border-radius: 0px;
+
   outline: none;
+
 }
 
 .button {
@@ -99,4 +117,17 @@ div[id^="agora-video-player-track"]{
   right: 3px;
   top: 4px;
   font-size: 24px;
+}
+.text{
+ display: flex;
+margin-left: 15px;
+font-size: 16px;
+
+}
+.input-border {
+  border-color: #3E68A8 !important;
+}
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper{
+  border-radius: 14PX !important;
 }

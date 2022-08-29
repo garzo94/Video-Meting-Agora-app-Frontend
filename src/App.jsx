@@ -25,7 +25,7 @@ function App() {
           horizontal: "center",
         }}
       >
-        {/* <CssBaseline /> */}
+        <CssBaseline />
 
         <Router>
           <Routes>

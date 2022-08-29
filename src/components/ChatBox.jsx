@@ -3,7 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 import "../App.css";
 import useMeeting from "../globalVariables/MeetingContext";
 import DialogTime from "./DialogTime";
-import { Box } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import SendIcon from "@mui/icons-material/Send";
 
 const APP_ID = "e00fc18b59d448278a3dfaf71de5b2d9";
 
@@ -50,10 +52,10 @@ export default function ChatBox({ CHANNEL, timeDisable, chat }) {
       MessagesVar(true);
     }
   }, [theirMessages]);
-
+  console.log(extendMessage, "messageee");
   useEffect(() => {
     if (extendMessage === "Extending Meeting" && timeDisable === false) {
-      setDialog(<DialogTime openDialog={timeDisable} />);
+      setDialog(<DialogTime timeDisable={timeDisable} />);
     }
   }, [extendMessage, timeDisable]);
 
@@ -132,44 +134,75 @@ export default function ChatBox({ CHANNEL, timeDisable, chat }) {
   }, [extendMeetingBack]);
 
   return (
-    <Box>
-      <main
-        className="main"
-        style={{
-          position: "absolute",
-          right: "80px",
-          bottom: "15px",
-          display: display,
-        }}
-      >
-        <div className="panel">
-          <div className="messages" ref={messagesRef}>
-            <div className="inner">
-              {messages.map((message, idx) => (
-                <div key={idx} className="message">
-                  {message.uid === uid && (
-                    <div className="user-self">You:&nbsp;</div>
-                  )}
-                  {message.uid !== uid && (
-                    <div className="user-them">Them:&nbsp;</div>
-                  )}
-                  <div className="text">{message.text}</div>
-                </div>
-              ))}
-            </div>
+    <main
+      className="main"
+      style={{
+        position: "absolute",
+
+        left: "950px",
+        top: "-525px",
+        display: display,
+      }}
+    >
+      <div className="panel">
+        <div className="messages" ref={messagesRef}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marging: "5px",
+            }}
+          >
+            <h1
+              style={{
+                fontSize: "24px",
+                lineHeight: "31px",
+                color: "#242424",
+                marginLeft: "10px",
+              }}
+            >
+              Messages
+            </h1>
+            <IconButton>
+              <CloseIcon />
+            </IconButton>
           </div>
 
-          <form className="form" onSubmit={sendMessage}>
-            <input
-              className="input"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-            <button className="button">+</button>
-          </form>
+          <div className="inner">
+            {messages.map((message, idx) => (
+              <div key={idx} className="message">
+                {message.uid === uid && (
+                  <div className="user-self">You:&nbsp;</div>
+                )}
+                {message.uid !== uid && (
+                  <div className="user-them">Alex 2:&nbsp;</div>
+                )}
+                <div className="text">{message.text}</div>
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
+
+        <form className="form" onSubmit={sendMessage}>
+          <input
+            className="input"
+            value={text}
+            placeholder="Type your message"
+            onChange={(e) => setText(e.target.value)}
+          ></input>
+          <IconButton
+            sx={{
+              background: "white",
+              borderRadius: "0px",
+              borderTop: "1px solid #999",
+              borderLeft: "1px solid #999",
+            }}
+          >
+            <SendIcon sx={{ color: "#3347B0" }} />
+          </IconButton>
+        </form>
+      </div>
       {dialog}
-    </Box>
+    </main>
   );
 }

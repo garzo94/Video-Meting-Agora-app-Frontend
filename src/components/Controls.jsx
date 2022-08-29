@@ -25,10 +25,10 @@ export default function Controls({ localTracks, client, toggleCamMic }) {
   async function toggleCamera() {
     if (localTracks[1].muted) {
       await localTracks[1].setMuted(false);
-      setMicMuted(false);
+      setcameraMuted(false);
     } else {
       await localTracks[1].setMuted(true);
-      setMicMuted(true);
+      setcameraMuted(true);
     }
   }
 
@@ -41,7 +41,13 @@ export default function Controls({ localTracks, client, toggleCamMic }) {
       setMicMuted(true);
     }
   }
-  const style = { fontSize: "40px" };
+  const style = {
+    fontSize: "40px",
+    color: "white",
+    background: "#353744",
+    borderRadius: "50px",
+    p: 1.1,
+  };
 
   return (
     <Stack
@@ -50,18 +56,22 @@ export default function Controls({ localTracks, client, toggleCamMic }) {
       alignItems="center"
       spacing={2}
     >
-      <IconButton size="large" onClick={toggleMic}>
-        {micMuted ? <MicOffIcon sx={style} /> : <MicIcon sx={style} />}
+      <IconButton size="small" onClick={toggleMic}>
+        {micMuted ? (
+          <MicOffIcon sx={{ ...style, background: "red" }} />
+        ) : (
+          <MicIcon sx={style} />
+        )}
       </IconButton>
-      <IconButton size="large" onClick={handleLeave}>
-        <CallEndIcon sx={style} />
-      </IconButton>
-      <IconButton size="large" onClick={toggleCamera}>
+      <IconButton size="small" onClick={toggleCamera}>
         {cameraMuted ? (
-          <VideocamOffIcon sx={style} />
+          <VideocamOffIcon sx={{ ...style, background: "red" }} />
         ) : (
           <VideocamIcon sx={style} />
         )}
+      </IconButton>
+      <IconButton size="small" onClick={handleLeave}>
+        <CallEndIcon sx={{ ...style, background: "red" }} />
       </IconButton>
     </Stack>
   );

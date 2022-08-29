@@ -7,6 +7,7 @@ import ChatIcon from "@mui/icons-material/Chat";
 import ChatBox from "./ChatBox";
 import useMeeting from "../globalVariables/MeetingContext";
 import { useNavigate } from "react-router-dom";
+import DialogTime from "./DialogTime";
 
 const defaultRemainingTime = {
   seconds: "0",
@@ -18,6 +19,7 @@ export default function CountDown({
   client,
   CHANNEL,
 }) {
+  let extendTimeDialog;
   const navigate = useNavigate();
   const { messagesVar, MessagesVar, ExtendMeeting, extendMeetingBackMessage } =
     useMeeting();
@@ -25,13 +27,20 @@ export default function CountDown({
   const { enqueueSnackbar } = useSnackbar();
   const [remainingTime, setRemainingTime] = useState(defaultRemainingTime);
   const [timeDisable, setTimeDisable] = useState(false);
+  const style = {
+    fontSize: "40px",
+    color: "white",
+    background: "#353744",
+    borderRadius: "50px",
+    p: 1.1,
+  };
 
   useEffect(() => {
     if (chat === true) {
       MessagesVar(false);
     }
   }, [chat]);
-
+  console.log(extendMeetingBackMessage, "messageee");
   useEffect(() => {
     if (extendMeetingBackMessage === "Yes" && timeDisable) {
       enqueueSnackbar(
@@ -57,20 +66,8 @@ export default function CountDown({
   }
 
   function handleExtendMeeting() {
-    ExtendMeeting(true);
     setTimeDisable(true);
   }
-
-  useEffect(() => {
-    if (timeDisable) {
-      enqueueSnackbar(
-        "You have made a request to extend the meeting, if approved the meeting will be extended 5 more minutes.",
-        { variant: "info", autoHideDuration: 5000 }
-      );
-    }
-    if (timeDisable) {
-    }
-  }, [timeDisable]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -99,44 +96,87 @@ export default function CountDown({
   }, [remainingTime.seconds]);
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box>
+      {timeDisable ? <DialogTime timeDisable={timeDisable} /> : null}
       <Box
-        sx={{
-          width: "300px",
-          height: "50px",
-          border: "2px solid black",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginX: "auto",
-        }}
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <Typography sx={{ ml: "5px" }}>{remainingTime.minutes}</Typography>
-        <Typography sx={{ ml: "5px" }}>minutes</Typography>
-        <Typography sx={{ ml: "5px" }}>{remainingTime.seconds}</Typography>
-        <Typography sx={{ ml: "5px" }}>seconds</Typography>
-      </Box>
-      <Stack sx={{ position: "absolute", right: "60px", bottom: "0px" }}>
-        <Tooltip title="Add 5 minutes more">
-          <IconButton
-            size="large"
-            onClick={handleExtendMeeting}
-            disabled={timeDisable}
-          >
-            <MoreTimeIcon sx={{ fontSize: 40 }} />
-          </IconButton>
-        </Tooltip>
-        {messagesVar && chat === false ? (
-          <IconButton size="large" onClick={() => setChat(!chat)}>
-            <ChatIcon sx={{ fontSize: 40, color: "red" }} />
-          </IconButton>
-        ) : (
-          <IconButton size="large" onClick={() => setChat(!chat)}>
-            <ChatIcon sx={{ fontSize: 40 }} />
-          </IconButton>
-        )}
-      </Stack>
+        {extendTimeDialog ? extendTimeDialog : null}
+        <Box
+          sx={{
+            position: "absolute",
+            left: "225px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Box
+            sx={{
+              botom: "20px",
 
+              height: "33px",
+              border: "1px solid rgba(255, 255, 255, 0.12)",
+              borderRadius: "46px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "88px",
+              p: "6px 10px",
+            }}
+          >
+            <Typography
+              sx={{
+                color: "#ffffff",
+                letterSpacing: "0.05em",
+                fontWeight: "400",
+                fontSize: "16px",
+              }}
+            >
+              00:
+            </Typography>
+            <Typography
+              sx={{
+                color: "#ffffff",
+                letterSpacing: "0.05em",
+                fontWeight: "400",
+                fontSize: "16px",
+              }}
+            >{`${remainingTime.minutes}:`}</Typography>
+            <Typography
+              sx={{
+                color: "#ffffff",
+                letterSpacing: "0.05em",
+                fontWeight: "400",
+                fontSize: "16px",
+              }}
+            >
+              {remainingTime.seconds}
+            </Typography>
+          </Box>
+        </Box>
+
+        <Box sx={{ display: "flex", left: "1130px", position: "absolute" }}>
+          <Tooltip title="Extend time">
+            <IconButton
+              size="large"
+              onClick={handleExtendMeeting}
+              disabled={timeDisable}
+            >
+              <MoreTimeIcon sx={style} />
+            </IconButton>
+          </Tooltip>
+          {messagesVar && chat === false ? (
+            <IconButton size="large" onClick={() => setChat(!chat)}>
+              <ChatIcon sx={style} />
+            </IconButton>
+          ) : (
+            <IconButton size="large" onClick={() => setChat(!chat)}>
+              <ChatIcon sx={style} />
+            </IconButton>
+          )}
+        </Box>
+      </Box>
       <ChatBox CHANNEL={CHANNEL} timeDisable={timeDisable} chat={chat} />
     </Box>
   );

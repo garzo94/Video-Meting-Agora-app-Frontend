@@ -89,14 +89,23 @@ export default function VideoRoom({
   }, []);
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box
+      sx={{
+        position: "relative",
+        bgcolor: "#1E1E1E",
+        height: "100vh",
+        position: "relative",
+      }}
+    >
       <Grid
         container
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "75vh",
+          height: "88vh",
+          position: "relative",
+          wdith: "100%",
         }}
       >
         {users.map((user) => (
@@ -109,30 +118,53 @@ export default function VideoRoom({
           />
         ))}
       </Grid>
-      <h2
-        style={{
-          position: "absolute",
-          bottom: "-25px",
-          left: "5px",
-          fontSize: 40,
+      <Box
+        sx={{
+          display: "flex",
+          height: "72px",
+          background: "#171717",
+          right: "0px",
+          bottom: "0px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          position: "relative",
         }}
       >
-        {channel}
-      </h2>
-
-      <Controls
-        localTracks={localTracks}
-        client={client}
-        users={users}
-        id={uid}
-        // toggleCamMic={toggleCamMic}
-      />
-      <CountDown
-        countdownTimestampMs={startDate + duration}
-        localTracks={localTracks}
-        client={client}
-        CHANNEL={CHANNEL}
-      />
+        <h2
+          style={{
+            position: "absolute",
+            color: "#FDFDFD",
+            left: "117px",
+            fontSize: "20px",
+            fontWeight: "500",
+          }}
+        >
+          {channel}
+        </h2>
+        <div
+          style={{
+            position: "absolute",
+            width: "6px",
+            height: "6px",
+            borderRadius: "50px",
+            background: "white",
+            left: "205px",
+          }}
+        />
+        <CountDown
+          countdownTimestampMs={startDate + duration}
+          localTracks={localTracks}
+          client={client}
+          CHANNEL={CHANNEL}
+        />
+        <Controls
+          localTracks={localTracks}
+          client={client}
+          users={users}
+          id={uid}
+        />
+      </Box>
     </Box>
   );
 }

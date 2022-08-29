@@ -3,6 +3,8 @@ import { Box, TextField, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Image from "mui-image";
+import Logo from "../assets/Logo.png";
 
 const validationSchema = yup.object({
   name: yup
@@ -31,25 +33,78 @@ export default function InDateTime({ room }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        position: "relative",
       }}
     >
-      <Typography>
+      <Box
+        component="img"
+        sx={{
+          width: "189px;",
+          height: "32px;",
+          top: "32px;",
+          position: "absolute",
+        }}
+        alt="RapidMeett"
+        src={Logo}
+      />
+
+      <h1
+        style={{
+          position: "absolute",
+          top: "160px",
+          fontWeight: "500",
+          fontSize: "24px",
+          color: "#111111",
+          lineHeight: "31px",
+        }}
+      >
         Enter your name before entering the meeting please!
-      </Typography>
-      <form onSubmit={formik.handleSubmit}>
+      </h1>
+      <form
+        onSubmit={formik.handleSubmit}
+        style={{
+          position: "absolute",
+          top: "215px",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <TextField
-          variant="standard"
+          variant="outlined"
           id="name"
           name="name"
           label="Name"
           required
           onChange={formik.handleChange}
-          sx={{ mt: 2, width: "40%" }}
+          sx={{ mt: 2, width: "328px", height: "48px" }}
           error={formik.touched.name && Boolean(formik.errors.name)}
           helperText={formik.touched.name && formik.errors.name}
         />
 
-        <Button sx={{ mt: 8 }} type="submit">
+        <Button
+          sx={{
+            width: "191px",
+            mt: "24px",
+            p: "12px 28px",
+            background: "#3347B0",
+            top: "62px",
+            color: "white",
+            fontWeight: "500",
+            fontSize: "20px",
+            lineHeight: "24px",
+            textTransform: "capitalize",
+            letterSpacing: "0.02em",
+            ":hover": {
+              color: "white",
+              background: "#3347B0",
+              boxShadow:
+                "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);",
+            },
+          }}
+          type="submit"
+        >
           Join
         </Button>
       </form>

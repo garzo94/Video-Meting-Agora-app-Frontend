@@ -10,19 +10,18 @@ export default function VideoPlayer({ user, usersLength, name, uid }) {
     }
   }, []);
 
-  const height = usersLength >= 3 ? "40%" : "75%";
-  // console.log(usersLength, "userssss");
+  // const height = usersLength >= 3 ? "40%" : "75%";
 
   return (
     <Grid
       item
       ref={ref}
-      lg={usersLength >= 3 ? 3 : 5}
-      md={usersLength >= 3 ? 3 : 5}
-      sx={{ height: { height }, m: 3, position: "relative" }}
+      lg={4}
+      md={4}
+      sx={{ height: "288px", position: "relative", display: "" }}
       className="holaa perro"
     >
-      <Box sx={{ borderRadius: "5px", backgroundColor: "black" }}>
+      <Box sx={{ borderRadius: "15px", backgroundColor: "black" }}>
         <h4
           style={{
             position: "absolute",
@@ -30,9 +29,10 @@ export default function VideoPlayer({ user, usersLength, name, uid }) {
             zIndex: "1",
             margin: "5px",
             left: "8px",
-            bottom: "5px",
-            background: "rgba(0, 0, 0, 0.5)",
-            padding: "10px",
+            bottom: "2px",
+            fontSize: "20px",
+            lineHeight: "26px",
+            fontWeight: "500",
             color: "white",
           }}
         >
