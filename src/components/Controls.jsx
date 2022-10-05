@@ -16,10 +16,10 @@ export default function Controls({ localTracks, client, toggleCamMic }) {
     for (let localTrack of localTracks) {
       localTrack.stop();
       localTrack.close();
-      window.location.reload(true);
     }
     client.unpublish(localTracks).then(() => client.leave());
     navigate("/");
+    window.location.reload(true);
   }
 
   async function toggleCamera() {

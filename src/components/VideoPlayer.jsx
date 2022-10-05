@@ -3,7 +3,7 @@ import { Grid, Box } from "@mui/material";
 
 export default function VideoPlayer({ user, usersLength, name, uid }) {
   const ref = useRef();
-
+  console.log(user, "userrr");
   useEffect(() => {
     user.videoTrack.play(ref.current);
     {
@@ -36,7 +36,7 @@ export default function VideoPlayer({ user, usersLength, name, uid }) {
             color: "white",
           }}
         >
-          {uid === user.uid ? name : "Alex 2"}
+          {uid === user.uid ? name : "User 2"}
         </h4>
       </Box>
     </Grid>

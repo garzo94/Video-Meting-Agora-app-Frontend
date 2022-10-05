@@ -4,6 +4,7 @@ import VideoPlayer from "./VideoPlayer";
 import { Box, Grid } from "@mui/material";
 import Controls from "./Controls";
 import CountDown from "./CountDown";
+import { useSnackbar } from "notistack";
 
 const APP_ID = "77780af0adae470b9bf4d235b64c14c4";
 
@@ -21,24 +22,22 @@ export default function VideoRoom({
   duration,
 }) {
   const [users, setUsers] = useState([]);
-
+  const { enqueueSnackbar } = useSnackbar();
   const [localTracks, setLocalTracks] = useState([]);
-  var startDate =
-    new Date(
-      date.year,
-      date.month - 1,
-      date.day,
-      date.hour,
-      date.minutes
-    ).getTime() + 11000;
+  var startDate = new Date(
+    date.year,
+    date.month - 1,
+    date.day,
+    date.hour,
+    date.minutes
+  ).getTime();
+
   const CHANNEL = channel;
-  console.log(users, "usersss");
 
   const handleUserJoined = async (user, mediaType) => {
     await client.subscribe(user, mediaType);
     if (mediaType === "video") {
       setUsers((previousUsers) => {
-        console.log(previousUsers, "prevvv");
         return [...previousUsers, user];
       });
     }
@@ -94,7 +93,6 @@ export default function VideoRoom({
         position: "relative",
         bgcolor: "#1E1E1E",
         height: "100vh",
-        position: "relative",
       }}
     >
       <Grid
@@ -125,7 +123,6 @@ export default function VideoRoom({
           background: "#171717",
           right: "0px",
           bottom: "0px",
-          display: "flex",
           justifyContent: "center",
           alignItems: "center",
           position: "relative",

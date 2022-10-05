@@ -166,15 +166,10 @@ export default function CountDown({
               <MoreTimeIcon sx={style} />
             </IconButton>
           </Tooltip>
-          {messagesVar && chat === false ? (
-            <IconButton size="large" onClick={() => setChat(!chat)}>
-              <ChatIcon sx={style} />
-            </IconButton>
-          ) : (
-            <IconButton size="large" onClick={() => setChat(!chat)}>
-              <ChatIcon sx={style} />
-            </IconButton>
-          )}
+
+          <IconButton size="large" onClick={() => setChat(!chat)}>
+            <ChatIcon sx={style} />
+          </IconButton>
         </Box>
       </Box>
       <ChatBox CHANNEL={CHANNEL} timeDisable={timeDisable} chat={chat} />

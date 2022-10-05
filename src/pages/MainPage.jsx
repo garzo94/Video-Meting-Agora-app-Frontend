@@ -4,9 +4,6 @@ import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import { useSnackbar } from "notistack";
 import * as yup from "yup";
@@ -60,7 +57,7 @@ export default function MainPage() {
   const [duration, setDuration] = useState("5");
   const handleCopytoClipBoard = () => {
     enqueueSnackbar("Link Copied!", {
-      variant: "success",
+      variant: "info",
     });
     navigator.clipboard.writeText(link);
   };
@@ -85,7 +82,6 @@ export default function MainPage() {
           flexDirection: "column",
           justifyContent: "start",
           alignItems: "center",
-          position: "relative",
         }}
       >
         <Dialog
