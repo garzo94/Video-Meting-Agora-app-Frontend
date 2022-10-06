@@ -152,7 +152,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image1"
-          src="src\assets\Image1.png"
+          src="/assets/image1.png"
         />
         <Box
           component="img"
@@ -164,7 +164,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image2"
-          src="./assets/Image2.png"
+          src="/assets/Image2.png"
         />
         <Box
           component="img"
@@ -176,7 +176,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image2"
-          src="src\assets\Image3.png"
+          src="/assets/Image3.png"
         />
         <Box
           component="img"
@@ -188,7 +188,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image2"
-          src="src\assets\Image4.png"
+          src="assets\Image4.png"
         />
         <Box
           component="img"
@@ -199,7 +199,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="RapidMeet"
-          src="src\assets\Logo.png"
+          src="/assets/Logo.png"
         />
         <Box sx={{ left: "900" }}>
           <Box
@@ -212,7 +212,7 @@ export default function MainPage() {
               position: "absolute",
             }}
             alias="vector"
-            src="src\assets\Vector (1).png"
+            src="/assets/Vector (1).png"
           />
 
           <Box
@@ -225,7 +225,7 @@ export default function MainPage() {
               position: "absolute",
             }}
             alias="vector"
-            src="src\assets\Vector.png"
+            src="/assets/Vector.png"
           />
           <Box
             component="img"
@@ -237,7 +237,7 @@ export default function MainPage() {
               position: "absolute",
             }}
             alias="vector"
-            src="src\assets\Vector (2).png"
+            src="/assets/Vector (2).png"
           />
         </Box>
 
