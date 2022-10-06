@@ -199,7 +199,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="RapidMeet"
-          src="src\assets\Logo.png"
+          src="public\assets\Logo.png"
         />
         <Box sx={{ left: "900" }}>
           <Box
