@@ -164,7 +164,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image2"
-          src="assets\Image2.png"
+          src="/assets/Image2.png"
         />
         <Box
           component="img"
