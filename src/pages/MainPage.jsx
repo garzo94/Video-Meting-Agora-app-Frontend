@@ -152,7 +152,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image1"
-          src="public\assets\Image1.png"
+          src="src\assets\Image1.png"
         />
         <Box
           component="img"
@@ -164,7 +164,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image2"
-          src="public\assets\Image2.png"
+          src="assets\Image2.png"
         />
         <Box
           component="img"
@@ -176,7 +176,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image2"
-          src="public\assets\Image3.png"
+          src="src\assets\Image3.png"
         />
         <Box
           component="img"
@@ -188,7 +188,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image2"
-          src="public\assets\Image4.png"
+          src="src\assets\Image4.png"
         />
         <Box
           component="img"
@@ -199,7 +199,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="RapidMeet"
-          src="public\assets\Logo.png"
+          src="src\assets\Logo.png"
         />
         <Box sx={{ left: "900" }}>
           <Box
@@ -225,7 +225,7 @@ export default function MainPage() {
               position: "absolute",
             }}
             alias="vector"
-            src="public\assets\Vector.png"
+            src="src\assets\Vector.png"
           />
           <Box
             component="img"
@@ -237,7 +237,7 @@ export default function MainPage() {
               position: "absolute",
             }}
             alias="vector"
-            src="public\assets\Vector (2).png"
+            src="src\assets\Vector (2).png"
           />
         </Box>
 
