@@ -44,7 +44,7 @@ export default function MainPage() {
         room_name: values.room,
       });
 
-      setLink(`http://127.0.0.1:5173/join/${uidRoom}/`);
+      setLink(`https://rapidmeet.netlify.app/join/${uidRoom}/`);
       setOpen(true);
     },
   });
@@ -152,7 +152,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image1"
-          src="src\assets\Image1.png"
+          src="public\assets\Image1.png"
         />
         <Box
           component="img"
@@ -164,7 +164,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image2"
-          src="src\assets\Image2.png"
+          src="public\assets\Image2.png"
         />
         <Box
           component="img"
@@ -176,7 +176,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image2"
-          src="src\assets\Image3.png"
+          src="public\assets\Image3.png"
         />
         <Box
           component="img"
@@ -188,7 +188,7 @@ export default function MainPage() {
             position: "absolute",
           }}
           alias="image2"
-          src="src\assets\Image4.png"
+          src="public\assets\Image4.png"
         />
         <Box
           component="img"
@@ -225,7 +225,7 @@ export default function MainPage() {
               position: "absolute",
             }}
             alias="vector"
-            src="src\assets\Vector.png"
+            src="public\assets\Vector.png"
           />
           <Box
             component="img"
@@ -237,7 +237,7 @@ export default function MainPage() {
               position: "absolute",
             }}
             alias="vector"
-            src="src\assets\Vector (2).png"
+            src="public\assets\Vector (2).png"
           />
         </Box>
 
