@@ -13,6 +13,7 @@ let client = AgoraRTM.createInstance(APP_ID);
 let uid = uuidv4();
 
 import React, { useEffect, useRef, useState } from "react";
+import { Close } from "@mui/icons-material";
 
 export default function ChatBox({ CHANNEL, timeDisable, chat }) {
   const {
@@ -28,6 +29,7 @@ export default function ChatBox({ CHANNEL, timeDisable, chat }) {
   const [messages, setMessages] = useState([]);
   const [messageBack, setmessageBack] = useState("");
   const [extendMessage, setExtendMessage] = useState("");
+  const [close, setClose] = useState(true);
 
   const [text, setText] = useState("");
   const [channel, setChannel] = useState(null);
@@ -163,9 +165,9 @@ export default function ChatBox({ CHANNEL, timeDisable, chat }) {
             >
               Messages
             </h1>
-            <IconButton>
+            {/* <IconButton onClick={() => setClose(!close)}>
               <CloseIcon />
-            </IconButton>
+            </IconButton> */}
           </div>
 
           <div className="inner">

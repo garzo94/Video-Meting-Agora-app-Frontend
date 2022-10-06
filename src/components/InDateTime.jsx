@@ -3,7 +3,6 @@ import { Box, TextField, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Image from "mui-image";
 import Logo from "../assets/Logo.png";
 
 const validationSchema = yup.object({

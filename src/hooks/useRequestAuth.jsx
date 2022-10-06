@@ -2,13 +2,16 @@ import { useCallback, useState, useContext } from "react";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 
+const client = axios.create({
+  baseURL: "https://rapidmeet.up.railway.app/",
+});
 export default function useRequestAuth() {
   const { enqueueSnackbar } = useSnackbar();
   const [meetingData, setMeetingData] = useState({});
   const [userData, setUserData] = useState({});
   const CreateMeeting = useCallback(
     (data) => {
-      axios
+      client
         .post("/api/my_room/", data)
         .then(() => {})
         .catch((err) => {
@@ -19,7 +22,7 @@ export default function useRequestAuth() {
   );
   const GetMeetingData = useCallback(
     ({ query }) => {
-      axios
+      client
         .get(`/api/my_room/${query}`)
         .then((res) => {
           setMeetingData(res.data);
@@ -33,7 +36,7 @@ export default function useRequestAuth() {
 
   const UserMeetingData = useCallback(
     ({ query }, values) => {
-      axios
+      client
         .post(`/api/room_meeting/${query}/`, values)
         .then((res) => {
           setUserData(res.data);

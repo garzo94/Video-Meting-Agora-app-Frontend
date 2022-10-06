@@ -22,6 +22,7 @@ export default function VideoRoom({
   duration,
 }) {
   const [users, setUsers] = useState([]);
+  const [usersUnique, setUsersUnique] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
   const [localTracks, setLocalTracks] = useState([]);
   var startDate = new Date(
@@ -32,6 +33,7 @@ export default function VideoRoom({
     date.minutes
   ).getTime();
 
+  console.log(usersUnique, "uniqueeee");
   const CHANNEL = channel;
 
   const handleUserJoined = async (user, mediaType) => {
